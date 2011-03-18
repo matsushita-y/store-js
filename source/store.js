@@ -1,8 +1,8 @@
-//
+/*
 // Copyright (c) 2011 Frank Kohlhepp
-// License: MIT-license
 // https://github.com/frankkohlhepp/store-js
-//
+// License: MIT-license
+*/
 (function () {
     this.Store = function (name) {
         var storePrototype = {
@@ -10,11 +10,11 @@
                 var stringifiedObj = JSON.stringify(this);
                 localStorage.setItem(name, stringifiedObj);
                 
-                if (localStorage.getItem(name) === stringifiedObj) {
-                    return true;
-                } else {
-                    return false;
+                if (localStorage.getItem(name) !== stringifiedObj) {
+                    throw "savingFailed";
                 }
+                
+                return this;
             },
             
             "remove": function () {
@@ -24,6 +24,8 @@
                         delete this[key];
                     }
                 }
+                
+                return this;
             }
         };
         
