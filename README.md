@@ -25,8 +25,8 @@ You just choose a name for a new store, and save it in a variable. Now you have 
 
     myStore.save();
 
-And that's it! If save() returns true, everything is ok.  
-So let's say you want to access the stored values later on. Do to that, you just restore the object using the same name:
+And that's it! So let's say you want to access the stored values later on.  
+Do to that, you just restore the object using the same name:
 
     var myStore = Store("myStore");
 
