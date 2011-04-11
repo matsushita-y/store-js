@@ -11,7 +11,7 @@
                 localStorage.setItem(name, stringifiedObj);
                 
                 if (localStorage.getItem(name) !== stringifiedObj) {
-                    throw "savingFailed";
+                    throw "saveFailed";
                 }
                 
                 return this;
@@ -33,4 +33,4 @@
         store.__proto__ = storePrototype;
         return store;
     };
-})();
+}());
