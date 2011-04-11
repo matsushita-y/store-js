@@ -7,11 +7,11 @@ The problem with localStorage is that it stringifies every value you save. Addit
 ### Howto
 Let's say you just want to start over, and make a new store:
 
-    `var myStore = Store("myStore");`
+    var myStore = Store("myStore");
 
 You just choose a name for a new store, and save it in a variable. Now you have an object that you can manipulate as usual:
 
-    `myStore.extension = {
+    myStore.extension = {
         "version": "0.2",
         "install_script_done": false
     };
@@ -19,25 +19,25 @@ You just choose a name for a new store, and save it in a variable. Now you have 
         "self_destruct": true,
         "kill_users": false
     };
-    myStore.isCool = true;`
+    myStore.isCool = true;
 
 myStore now contains everything you want to save, so let's do it:
 
-    `myStore.save();`
+    myStore.save();
 
 And that's it! Now let's say you want to access the stored values later on.  
 Do to that, you just restore the object using the same name:
 
-    `var myStore = Store("myStore");`
+    var myStore = Store("myStore");
 
 Now you can access everything in myStore.  
 And if you want a second, clean store you can have that as well:
 
-    `var myOtherStore = Store("myOtherStore");`
+    var myOtherStore = Store("myOtherStore");
 
 To remove a store, run this:
 
-    `myStore.remove();`
+    myStore.remove();
 
 ### License
 store.js is licensed under the **MIT-license**.  
