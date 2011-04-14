@@ -1,10 +1,11 @@
-/*
+//
 // Copyright (c) 2011 Frank Kohlhepp
 // https://github.com/frankkohlhepp/store-js
 // License: MIT-license
-*/
+//
 (function () {
     this.Store = function (name) {
+        // Prototype that contains the two methods
         var storePrototype = {
             "save": function () {
                 var stringifiedObj = JSON.stringify(this);
@@ -19,6 +20,8 @@
             
             "remove": function () {
                 localStorage.removeItem(name);
+                
+                // Remove any Members from this Object
                 for (var key in this) {
                     if (this.hasOwnProperty(key)) {
                         delete this[key];
