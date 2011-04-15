@@ -21,7 +21,7 @@ You just choose a name for a new store, and save it in a variable. Now you have 
     };
     myStore.isCool = true;
 
-myStore now contains everything you want to save, so let's do it:
+myStore now contains everything you want to save, so let's go for it:
 
     myStore.save();
 
@@ -35,9 +35,15 @@ And if you want a second, clean store you can have that as well:
 
     var myOtherStore = Store("myOtherStore");
 
-To remove a store, run this:
+To remove a store from localStorage, run this:
 
     myStore.remove();
+
+The store will be completely removed from localStorage, and the variable will be restored to an empty store, so you can just start over.
+
+### Quota
+Just one more thing: localStorage has a quota. When it is exceeded, store.js will throw an exception called "quotaExceeded".  
+But the quota is usually so huge, you don't have to worry about that at all.
 
 ### License
 store.js is licensed under the **MIT-license**.  

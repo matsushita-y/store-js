@@ -5,14 +5,19 @@
 //
 (function () {
     this.Store = function (name) {
-        // Prototype that contains the two methods
+        // Creates a new prototype for every store
+        // because the name variable is transmitted
+        // via a closure.
         var storePrototype = {
             "save": function () {
-                var stringifiedObj = JSON.stringify(this);
-                localStorage.setItem(name, stringifiedObj);
-                
-                if (localStorage.getItem(name) !== stringifiedObj) {
-                    throw "saveFailed";
+                try {
+                    localStorage.setItem(name, JSON.stringify(this));
+                } catch (e) {
+                    if (e.code === 22) {
+                        throw "quotaExceeded";
+                    } else {
+                        throw "unknownError"
+                    }
                 }
                 
                 return this;
@@ -21,7 +26,7 @@
             "remove": function () {
                 localStorage.removeItem(name);
                 
-                // Remove any Members from this Object
+                // Restore to a clean store
                 for (var key in this) {
                     if (this.hasOwnProperty(key)) {
                         delete this[key];
