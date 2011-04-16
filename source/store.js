@@ -94,10 +94,10 @@
             "save": function () {
                 var newStorage = localStorage.getItem(name);
                 if (newStorage !== originalStorage) {
-                    originalStorage = JSON.parse(originalStorage || "{}");
+                    originalStorageObj = JSON.parse(originalStorage || "{}");
                     newStorage = JSON.parse(newStorage || "{}");
                     
-                    var save = merge(originalStorage, newStorage, this);
+                    var save = merge(originalStorageObj, newStorage, this);
                 } else {
                     var save = this;
                 }

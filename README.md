@@ -47,7 +47,7 @@ But the quota is usually so huge, you don't have to worry about that at all.
 
 ### Multible Instances
 You can safely use store.js across multible instances. When you safe, the store is being merged.  
-As I said - the *store* is being merged, not single variables. This includes arrays, so be careful!
+As I said - the **store** is being merged, not single variables. This includes arrays, so be careful!
 
 ### License
 store.js is licensed under the **MIT-license**.  
