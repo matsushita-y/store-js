@@ -65,7 +65,7 @@
                 if (original.hasOwnProperty(key)) {
                     if (!object.hasOwnProperty(key)) {
                         delete target[key];
-                    } else if (typeof target[key] === "object" && target[key] !== null) {
+                    } else if (typeof object[key] === "object" && object[key] !== null) {
                         target[key] = merge(original[key], object[key]);
                     }
                 }
