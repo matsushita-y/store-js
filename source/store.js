@@ -60,30 +60,38 @@
         for (var i = 1; i < arguments.length; i++) {
             var object = arguments[i];
             
-            // Remove keys from the target, that were removed
-            for (var key in original) {
-                if (original.hasOwnProperty(key)) {
-                    if (!object.hasOwnProperty(key)) {
-                        delete target[key];
-                    } else if (typeof object[key] === "object" && object[key] !== null) {
-                        target[key] = merge(original[key], object[key]);
-                    }
-                }
-            }
+            // Remove keys from the target that were removed
+            mergeRemove(target, original, object);
             
             // Merge the rest
-            for (var key in object) {
-                if (object.hasOwnProperty(key)) {
-                    if (typeof object[key] === "object" && object[key] !== null) {
-                        target[key] = merge(original[key], object[key]);
-                    } else if (object[key] !== original[key]) {
-                        target[key] = object[key];
-                    }
-                }
-            }
+            mergeCopy(target, original, object);
         }
         
         return target;
+    }
+    
+    function mergeRemove(target, original, object) {
+        for (var key in original) {
+            if (original.hasOwnProperty(key)) {
+                if (!object.hasOwnProperty(key)) {
+                    delete target[key];
+                } else if (typeOf(object[key]) === "object") {
+                    mergeRemove(target[key], original[key], object[key]);
+                }
+            }
+        }
+    }
+    
+    function mergeCopy(target, original, object) {
+        for (var key in object) {
+            if (object.hasOwnProperty(key)) {
+                if (typeOf(object[key]) === "object") {
+                    mergeCopy(target[key], original[key], object[key]);
+                } else if (object[key] !== original[key]) {
+                    target[key] = object[key];
+                }
+            }
+        }
     }
     
     this.Store = function (name) {
@@ -92,10 +100,14 @@
         // via a closure.
         var storePrototype = {
             "save": function () {
+                if (JSON.stringify(this) === originalStorage) {
+                    return this;
+                }
+                
                 var newStorage = localStorage.getItem(name);
                 if (newStorage !== originalStorage) {
                     var newStorageObj = JSON.parse(newStorage || "{}");
-                    originalStorageObj = JSON.parse(originalStorage || "{}");
+                    var originalStorageObj = JSON.parse(originalStorage || "{}");
                     
                     var save = merge(originalStorageObj, newStorageObj, this);
                 } else {
@@ -121,6 +133,7 @@
             
             "remove": function () {
                 localStorage.removeItem(name);
+                originalStorage = "{}";
                 
                 // Restore to a clean store
                 for (var key in this) {
