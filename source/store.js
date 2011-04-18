@@ -95,15 +95,15 @@
     }
     
     this.Store = function (name) {
-        // Creates a new prototype for every store
-        // because the name variable is transmitted
-        // via a closure.
         var storePrototype = {
             "save": function () {
+                // Check if we even have to save
                 if (JSON.stringify(this) === originalStorage) {
                     return this;
                 }
                 
+                // Check if localStorage has been updated by
+                // another instance of store.js
                 var newStorage = localStorage.getItem(name);
                 if (newStorage !== originalStorage) {
                     var newStorageObj = JSON.parse(newStorage || "{}");
@@ -125,6 +125,8 @@
                 }
                 
                 if (save === this) {
+                    // Update the current state of localStorage,
+                    // if we havn't merged
                     originalStorage = localStorage.getItem(name);
                 }
                 
@@ -146,7 +148,7 @@
             }
         };
         
-        // Save the current state in localStorage
+        // Save the current state of localStorage
         var originalStorage = localStorage.getItem(name),
             store = JSON.parse(localStorage.getItem(name)  || "{}");
         store.__proto__ = storePrototype;
