@@ -138,7 +138,7 @@ settings.fromObject(settingsObj, true);
 **Return value:** store(object)
 
 Replaces the store with the values from the object.  
-If "merge" is not true, then the complete store will be removed, and replaced with the values.
+If "merge" is not true, then the complete store will be removed, and replaced with the values.  
 If "merge" is true, then new values will be added, different values will be replaced, all other values not be touched.
 
 ### License

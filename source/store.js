@@ -74,28 +74,28 @@
     };
     
     Store.prototype.toObject = function () {
-        var object,
+        var values,
             name,
             i,
             key;
         
-        object = {};
+        values = {};
         name = "store." + this.name + ".";
         for (i = localStorage.length; i >= 0; i--) {
             if (localStorage.key(i) && localStorage.key(i).substring(0, name.length) === name) {
                 key = localStorage.key(i).substring(name.length);
-                object[key] = this.get(key);
+                values[key] = this.get(key);
             }
         }
         
-        return object;
+        return values;
     };
     
-    Store.prototype.fromObject = function (object, merge) {
+    Store.prototype.fromObject = function (values, merge) {
         if (merge !== true) { this.removeAll(); }
-        for (var key in object) {
-            if (object.hasOwnProperty(key)) {
-                this.set(key, object[key]);
+        for (var key in values) {
+            if (values.hasOwnProperty(key)) {
+                this.set(key, values[key]);
             }
         }
         
