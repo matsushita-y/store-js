@@ -8,15 +8,15 @@
         this.name = name;
     };
     
-    Store.__proto__.initWithDefaults = function (name, object) {
+    Store.__proto__.initWithDefaults = function (name, defaults) {
         var store,
             key;
         
         store = new Store(name);
-        for (key in object) {
-            if (object.hasOwnProperty(key)) {
+        for (key in defaults) {
+            if (defaults.hasOwnProperty(key)) {
                 if (store.get(key) === undefined) {
-                    store.set(key, object[key]);
+                    store.set(key, defaults[key]);
                 }
             }
         }

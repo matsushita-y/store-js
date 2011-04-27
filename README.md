@@ -73,7 +73,7 @@ var color = settings.get("color");
 **Parameters:** name(string)  
 **Return value:** value(any) or undefined
 
-Retrieves a value.  
+Retrieves a value. (And automatically JSON-serializes it)  
 If a value is not present in localStorage, it will return undefined.
 
 ## set()
@@ -85,7 +85,7 @@ settings.set("color", "blue");
 **Parameters:** name(string), value(any)  
 **Return value:** store(object)
 
-Sets a value.  
+Sets a value. (And automatically JSON-deserializes it)  
 If the new value is undefined, the value will be removed from localStorage.  
 Use null instead, if you want to set a value to "nothing".
 
