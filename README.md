@@ -44,7 +44,7 @@ The rest of store.js is described in the following method reference:
 ``` javascript
 var settings = new Store("settings");
 ```
-**Parameters:** name(string)
+**Parameters:** name(string)  
 **Return value:** store(object)
 
 Creates a new Store.
@@ -57,7 +57,7 @@ var settings = new Store("settings", {
 });
 ```
 
-**Parameters:** name(string), defaults(object)
+**Parameters:** name(string), defaults(object)  
 **Return value:** store(object)
 
 Creates a new Store with default values.  
@@ -70,7 +70,7 @@ var settings = new Store("settings");
 var color = settings.get("color");
 ```
 
-**Parameters:** name(string)
+**Parameters:** name(string)  
 **Return value:** value(any) or undefined
 
 Retrieves a value.  
@@ -82,7 +82,7 @@ var settings = new Store("settings");
 settings.set("color", "blue");
 ```
 
-**Parameters:** name(string), value(any)
+**Parameters:** name(string), value(any)  
 **Return value:** store(object)
 
 Sets a value.  
@@ -95,7 +95,7 @@ var settings = new Store("settings");
 settings.remove("color");
 ```
 
-**Parameters:** name(string)
+**Parameters:** name(string)  
 **Return value:** store(object)
 
 Removes a value.
@@ -106,7 +106,7 @@ var settings = new Store("settings");
 settings.removeAll();
 ```
 
-**Parameters:** (none)
+**Parameters:** (none)  
 **Return value:** store(object)
 
 Removes all values of a store.
@@ -117,7 +117,7 @@ var settings = new Store("settings");
 var settingsObj = settings.toObject();
 ```
 
-**Parameters:** (none)
+**Parameters:** (none)  
 **Return value:** values(object)
 
 Puts all values of a store in a object.
@@ -134,7 +134,7 @@ var settings = new Store("settings");
 settings.fromObject(settingsObj, true);
 ```
 
-**Parameters:** values(object), merge(boolean)
+**Parameters:** values(object), merge(boolean)  
 **Return value:** store(object)
 
 Replaces the store with the values from the object.  
