@@ -1,15 +1,45 @@
 # [store.js](https://github.com/frankkohlhepp/store-js)
-*Provides an alternative implementation of localStorage.*
+*A powerful toolkit for localStorage.*
 
 ### Why
-The problem with localStorage is that it stringifies every value you save. Additionally, you can only save key-value pairs, you have no nesting, no structure. And, you cannot just make a second, clean storage.
+The main problem with localStorage is that it stringifies every value you save.  
+Starting with that issue, localStorage is not very powerful: You just can save key-value pairs. And that's it.  
+You don't have any structure (or groups), you cannot make a second, clean group, you cannot conveniently set default values, and you cannot just put a group of values into an object.
+
+But with store.js - you can do all of that.
 
 ### Howto
-Let's say you just want to start over, and make a new store:
+store.js groups your values into something called stores. So let's make a new store:
 
-    var myStore = Store("myStore");
+``` javascript
+var settings = new Store("settings");
+```
 
-You just choose a name for a new store, and save it in a variable. Now you have an object that you can manipulate as usual:
+You just choose a name for the new store, and save it in a variable. Now you can almost normally get and set values:
+
+``` javascript
+settings.set("color", "blue");
+settings.set("enable_test1", true);
+settings.set("number_of_rainbows": 8);
+
+// and
+
+var color = settings.get("color");
+// ...
+```
+
+Pretty normal. But it automatically JSON-serializes and JSON-deserializes your values. So, if you put a boolean in, a boolean comes out.  
+store.js saves the values with the group name, so the value "color" becomes "store.settings.color".
+
+Now you can interact with that store, e.g. put all values into a convenient-to-use object:
+
+``` javascript
+var settingsObj = settings.toObject();
+```
+
+
+
+
 
     myStore.extension = {
         "version": "0.2",
