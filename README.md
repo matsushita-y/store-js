@@ -20,7 +20,7 @@ Just choose a name for the new store, and save it in a variable. Now you can alm
 ``` javascript
 settings.set("color", "blue");
 settings.set("enable_test1", true);
-settings.set("number_of_rainbows": 8);
+settings.set("number_of_rainbows", 8);
 
 // and
 
