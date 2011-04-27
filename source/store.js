@@ -77,14 +77,16 @@
         var values,
             name,
             i,
-            key;
+            key,
+            value;
         
         values = {};
         name = "store." + this.name + ".";
         for (i = localStorage.length; i >= 0; i--) {
             if (localStorage.key(i) && localStorage.key(i).substring(0, name.length) === name) {
                 key = localStorage.key(i).substring(name.length);
-                values[key] = this.get(key);
+                value = this.get(key);
+                if (value !== undefined) { values[key] = value; }
             }
         }
         
