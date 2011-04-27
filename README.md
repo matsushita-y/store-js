@@ -40,16 +40,16 @@ var settingsObj = settings.toObject();
 The rest of store.js is described in the following method reference:
 
 ### Reference
-#### Constructor
+## Constructor
 ``` javascript
 var settings = new Store("settings");
 ```
-**Parameters:** name(string)  
+**Parameters:** name(string)
 **Return value:** store(object)
 
-Create a new Store.
+Creates a new Store.
 
-#### Constructor with default values
+## Constructor with default values
 ``` javascript
 var settings = new Store("settings", {
     "color": "red",
@@ -60,29 +60,87 @@ var settings = new Store("settings", {
 **Parameters:** name(string), defaults(object)
 **Return value:** store(object)
 
+Creates a new Store with default values.  
+If a value is already present in localStorage, it will not be overridden.  
+If a value is NOT already present, it will be created with the default value.
+
+## get()
+``` javascript
+var settings = new Store("settings");
+var color = settings.get("color");
+```
+
+**Parameters:** name(string)
+**Return value:** value(any) or undefined
+
+Retrieves a value.  
+If a value is not present in localStorage, it will return undefined.
+
+## set()
+``` javascript
+var settings = new Store("settings");
+settings.set("color", "blue");
+```
+
+**Parameters:** name(string), value(any)
+**Return value:** store(object)
+
+Sets a value.  
+If the new value is undefined, the value will be removed from localStorage.  
+Use null instead, if you want to set a value to "nothing".
+
+## remove()
+``` javascript
+var settings = new Store("settings");
+settings.remove("color");
+```
+
+**Parameters:** name(string)
+**Return value:** store(object)
+
+Removes a value.
+
+## removeAll()
+``` javascript
+var settings = new Store("settings");
+settings.removeAll();
+```
+
+**Parameters:** (none)
+**Return value:** store(object)
+
+Removes all values of a store.
+
+## toObject()
+``` javascript
+var settings = new Store("settings");
+var settingsObj = settings.toObject();
+```
+
+**Parameters:** (none)
+**Return value:** values(object)
+
+Puts all values of a store in a object.
+
+## fromObject()
+``` javascript
+var settingsObj = {
+    "color": "brown",
+    "use_everything": true,
+    "be_a_hero": true
+};
+
+var settings = new Store("settings");
+settings.fromObject(settingsObj, true);
+```
+
+**Parameters:** values(object), merge(boolean)
+**Return value:** store(object)
+
+Replaces the store with the values from the object.  
+If "merge" is not true, then the complete store will be removed, and replaced with the values.
+If "merge" is true, then new values will be added, different values will be replaced, all other values not be touched.
+
 ### License
 store.js is licensed under the **MIT-license**.  
 For details see *LICENSE.txt*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
