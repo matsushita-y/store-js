@@ -8,11 +8,6 @@
         this.name = name;
     };
     
-    Store.__proto__.clear = function () {
-        localStorage.clear();
-        return this;
-    };
-    
     Store.__proto__.initWithDefaults = function (name, object) {
         var store,
             key;
