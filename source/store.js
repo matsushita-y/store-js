@@ -14,10 +14,8 @@
         
         store = new Store(name);
         for (key in defaults) {
-            if (defaults.hasOwnProperty(key)) {
-                if (store.get(key) === undefined) {
-                    store.set(key, defaults[key]);
-                }
+            if (defaults.hasOwnProperty(key) && store.get(key) === undefined) {
+                store.set(key, defaults[key]);
             }
         }
         
@@ -64,8 +62,8 @@
             i;
         
         name = "store." + this.name + ".";
-        for (i = localStorage.length; i >= 0; i--) {
-            if (localStorage.key(i) && localStorage.key(i).substring(0, name.length) === name) {
+        for (i = (localStorage.length - 1); i >= 0; i--) {
+            if (localStorage.key(i).substring(0, name.length) === name) {
                 localStorage.removeItem(localStorage.key(i));
             }
         }
@@ -82,8 +80,8 @@
         
         values = {};
         name = "store." + this.name + ".";
-        for (i = localStorage.length; i >= 0; i--) {
-            if (localStorage.key(i) && localStorage.key(i).substring(0, name.length) === name) {
+        for (i = (localStorage.length - 1); i >= 0; i--) {
+            if (localStorage.key(i).substring(0, name.length) === name) {
                 key = localStorage.key(i).substring(name.length);
                 value = this.get(key);
                 if (value !== undefined) { values[key] = value; }
