@@ -1,5 +1,5 @@
 # [store.js](https://github.com/frankkohlhepp/store-js)
-*A powerful toolkit for localStorage.*
+*A small, yet powerful toolkit for localStorage.*
 
 ### Why
 The main problem with localStorage is that it stringifies every value you save.  
@@ -40,27 +40,19 @@ var settingsObj = settings.toObject();
 The rest of store.js is described in the following method reference:
 
 ### Reference
+* = optional
+
 ## Constructor
 ``` javascript
-var settings = new Store("settings");
-```
-**Parameters:** name(string)  
-**Return value:** store(object)
-
-Creates a new Store.
-
-## Constructor with default values
-``` javascript
 var settings = new Store("settings", {
-    "color": "red",
-    "number_of_rainbows": 3
+    "color": "blue",
+    "sound": 0.8
 });
 ```
-
-**Parameters:** name(string), defaults(object)  
+**Parameters:** name(string), *defaults(object)  
 **Return value:** store(object)
 
-Creates a new Store with default values.  
+Creates a new Store with default values. (optional)  
 If a value is already present in localStorage, it will not be overridden.  
 If a value is NOT already present, it will be created with the default value.
 
@@ -134,7 +126,7 @@ var settings = new Store("settings");
 settings.fromObject(settingsObj, true);
 ```
 
-**Parameters:** values(object), merge(boolean)  
+**Parameters:** values(object), *merge(boolean)  
 **Return value:** store(object)
 
 Replaces the store with the values from the object.  
