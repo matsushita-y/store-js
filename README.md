@@ -40,7 +40,7 @@ var settingsObj = settings.toObject();
 The rest of store.js is described in the following method reference:
 
 ### Reference
-* = optional
+\* = optional
 
 ## Constructor
 ``` javascript
