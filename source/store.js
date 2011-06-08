@@ -6,8 +6,8 @@
 (function () {
     var Store = this.Store = function (name, defaults) {
         var key;
-        this.name = name;
         
+        this.name = name;
         if (defaults !== undefined) {
             for (key in defaults) {
                 if (defaults.hasOwnProperty(key) && this.get(key) === undefined) {
@@ -18,13 +18,9 @@
     };
     
     Store.prototype.get = function (name) {
-        name = "store." + this.name + "." + name;
-        if (localStorage.getItem(name) === null) { return undefined; }
-        try {
-            return JSON.parse(localStorage.getItem(name));
-        } catch (e) {
-            return null;
-        }
+        var value = localStorage.getItem("store." + this.name + "." + name);
+        if (value === null) { return undefined; }
+        try { return JSON.parse(value); } catch (e) { return null; }
     };
     
     Store.prototype.set = function (name, value) {
@@ -87,8 +83,10 @@
     };
     
     Store.prototype.fromObject = function (values, merge) {
+        var key;
+        
         if (merge !== true) { this.removeAll(); }
-        for (var key in values) {
+        for (key in values) {
             if (values.hasOwnProperty(key)) {
                 this.set(key, values[key]);
             }
