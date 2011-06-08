@@ -29,7 +29,7 @@ var color = settings.get("color");
 ```
 
 Pretty normal. But it automatically JSON-serializes and JSON-deserializes your values. So, if you put a boolean in, a boolean comes out.  
-store.js saves the values with the group name, so the value "color" becomes "store.settings.color" in localStorage.
+store.js saves the values with the store name, so the key "color" becomes "store.settings.color" in localStorage.
 
 Now you can interact with that store, e.g. put all values into a convenient-to-use object:
 
@@ -112,7 +112,7 @@ var settingsObj = settings.toObject();
 **Parameters**: (none)  
 **Return value**: values(object)
 
-Puts all values of a store in a object.
+Puts all values of a store in an object.
 
 ## fromObject()
 ``` javascript
