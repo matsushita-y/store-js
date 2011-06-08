@@ -1,4 +1,4 @@
-# [store.js](https://github.com/frankkohlhepp/store-js)
+# [store.js](https://github.com/frankkohlhepp/store-js) v2.2
 *A small, yet powerful toolkit for localStorage.*
 
 ### Why
@@ -49,8 +49,8 @@ var settings = new Store("settings", {
     "sound": 0.8
 });
 ```
-**Parameters:** name(string), *defaults(object)  
-**Return value:** store(object)
+**Parameters**: name(string), *defaults(object)  
+**Return value**: store(object)
 
 Creates a new Store with default values. (optional)  
 If a value is already present in localStorage, it will not be overridden.  
@@ -62,10 +62,10 @@ var settings = new Store("settings");
 var color = settings.get("color");
 ```
 
-**Parameters:** name(string)  
-**Return value:** value(any) or undefined
+**Parameters**: name(string)  
+**Return value**: value(any) or undefined
 
-Retrieves a value. (And automatically JSON-serializes it)  
+Retrieves a value. (And automatically JSON-deserializes it)  
 If a value is not present in localStorage, it will return undefined.
 
 ## set()
@@ -74,10 +74,10 @@ var settings = new Store("settings");
 settings.set("color", "blue");
 ```
 
-**Parameters:** name(string), value(any)  
-**Return value:** store(object)
+**Parameters**: name(string), value(any)  
+**Return value**: store(object)
 
-Sets a value. (And automatically JSON-deserializes it)  
+Sets a value. (And automatically JSON-serializes it)  
 If the new value is undefined, the value will be removed from localStorage.  
 Use null instead, if you want to set a value to "nothing".
 
@@ -87,8 +87,8 @@ var settings = new Store("settings");
 settings.remove("color");
 ```
 
-**Parameters:** name(string)  
-**Return value:** store(object)
+**Parameters**: name(string)  
+**Return value**: store(object)
 
 Removes a value.
 
@@ -98,8 +98,8 @@ var settings = new Store("settings");
 settings.removeAll();
 ```
 
-**Parameters:** (none)  
-**Return value:** store(object)
+**Parameters**: (none)  
+**Return value**: store(object)
 
 Removes all values of a store.
 
@@ -109,8 +109,8 @@ var settings = new Store("settings");
 var settingsObj = settings.toObject();
 ```
 
-**Parameters:** (none)  
-**Return value:** values(object)
+**Parameters**: (none)  
+**Return value**: values(object)
 
 Puts all values of a store in a object.
 
@@ -126,12 +126,12 @@ var settings = new Store("settings");
 settings.fromObject(settingsObj, true);
 ```
 
-**Parameters:** values(object), *merge(boolean)  
-**Return value:** store(object)
+**Parameters**: values(object), *merge(boolean)  
+**Return value**: store(object)
 
 Replaces the store with the values from the object.  
 If "merge" is not true (which is the default), then the complete store will be removed, and replaced with the values.  
-If "merge" is true, then new values will be added, different values will be replaced, all other values will not be touched.
+If "merge" is true, then new values will be added, different values will be replaced, all other values won't be touched.
 
 ### License
 store.js is licensed under the **MIT-license**.  
