@@ -5,11 +5,9 @@
 //
 (function () {
     var Store = this.Store = function (name, defaults) {
-        var key;
-        
         this.name = name;
-        if (defaults !== undefined) {
-            for (key in defaults) {
+        if (defaults) {
+            for (var key in defaults) {
                 if (defaults.hasOwnProperty(key) && this.get(key) === undefined) {
                     this.set(key, defaults[key]);
                 }
@@ -49,11 +47,8 @@
     };
     
     Store.prototype.removeAll = function () {
-        var name,
-            i;
-        
-        name = "store." + this.name + ".";
-        for (i = (localStorage.length - 1); i >= 0; i--) {
+        var name = "store." + this.name + ".";
+        for (var i = (localStorage.length - 1); i >= 0; i--) {
             if (localStorage.key(i).substring(0, name.length) === name) {
                 localStorage.removeItem(localStorage.key(i));
             }
@@ -63,18 +58,12 @@
     };
     
     Store.prototype.toObject = function () {
-        var values,
-            name,
-            i,
-            key,
-            value;
-        
-        values = {};
-        name = "store." + this.name + ".";
-        for (i = (localStorage.length - 1); i >= 0; i--) {
+        var values = {};
+        var name = "store." + this.name + ".";
+        for (var i = (localStorage.length - 1); i >= 0; i--) {
             if (localStorage.key(i).substring(0, name.length) === name) {
-                key = localStorage.key(i).substring(name.length);
-                value = this.get(key);
+                var key = localStorage.key(i).substring(name.length);
+                var value = this.get(key);
                 if (value !== undefined) { values[key] = value; }
             }
         }
@@ -83,10 +72,8 @@
     };
     
     Store.prototype.fromObject = function (values, merge) {
-        var key;
-        
-        if (merge !== true) { this.removeAll(); }
-        for (key in values) {
+        if (!merge) { this.removeAll(); }
+        for (var key in values) {
             if (values.hasOwnProperty(key)) {
                 this.set(key, values[key]);
             }

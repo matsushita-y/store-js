@@ -1,7 +1,7 @@
-# [store.js](https://github.com/frankkohlhepp/store-js) v2.2
+# [store.js](https://github.com/frankkohlhepp/store-js) v2.3
 *A small, yet powerful toolkit for localStorage.*
 
-### Why
+### Info
 The main problem with localStorage is that it stringifies every value you save.  
 Starting with that issue, localStorage is not very powerful: You just can save key-value pairs. And that's it.  
 You don't have any structure (or groups), you cannot make a second, clean group, you cannot conveniently set default values, and you cannot just put a group of values into an object.
@@ -130,7 +130,7 @@ settings.fromObject(settingsObj, true);
 **Return value**: store(object)
 
 Replaces the store with the values from the object.  
-If "merge" is not true (which is the default), then the complete store will be removed, and replaced with the values.  
+If "merge" is false (which is the default), then the complete store will be removed, and replaced with the values.  
 If "merge" is true, then new values will be added, different values will be replaced, all other values won't be touched.
 
 ### License
