@@ -1,12 +1,15 @@
 # [store.js](https://github.com/frankkohlhepp/store-js) v2.3
 *A small, yet powerful toolkit for localStorage.*
 
+### CDN
+You can include store.js in any project by using the URL:  
+`http://libcdn.kohlhepp.me/store.js`
+
 ### Info
 The main problem with localStorage is that it stringifies every value you save.  
-Starting with that issue, localStorage is not very powerful:
-You just can save key-value pairs. And that's it.  
-You don't have any structure (or groups), you cannot make a second, clean group, you cannot
-conveniently set default values, and you cannot just put a group of values into an object.
+Starting with that issue, localStorage is not very powerful: You just can save key-value pairs. And that's it.  
+You don't have any structure (or groups), you cannot make a second, clean group, you cannot conveniently set default values,
+and you cannot just put a group of values into an object.
 
 But with store.js - you can do all of that.
 
@@ -17,8 +20,7 @@ store.js groups your values into something called a store. So let's make a new s
 var settings = new Store("settings");
 ```
 
-Just choose a name for the new store, and save it in a variable.
-Now you can almost normally get and set values:
+Just choose a name for the new store, and save it in a variable. Now you can almost normally get and set values:
 
 ``` javascript
 settings.set("color", "blue");
@@ -31,10 +33,8 @@ var color = settings.get("color");
 // ...
 ```
 
-Pretty normal. But it automatically JSON-serializes and JSON-deserializes your values.
-So, if you put a boolean in, a boolean comes out.  
-store.js saves the values with the store name, so the key "color"
-becomes "store.settings.color" in localStorage.
+Pretty normal. But it automatically JSON-serializes and JSON-deserializes your values. So, if you put a boolean in, a boolean comes out.  
+store.js saves the values with the store name, so the key "color" becomes "store.settings.color" in localStorage.
 
 Now you can interact with that store, e.g. put all values into a convenient-to-use object:
 
@@ -135,10 +135,8 @@ settings.fromObject(settingsObj, true);
 **Return value**: store(object)
 
 Replaces the store with the values from the object.  
-If "merge" is false (which is the default), then the complete store
-will be removed, and replaced with the values.  
-If "merge" is true, then new values will be added, different values
-will be replaced, all other values won't be touched.
+If "merge" is false (which is the default), then the complete store will be removed, and replaced with the values.  
+If "merge" is true, then new values will be added, different values will be replaced, all other values won't be touched.
 
 ### License
 store.js is licensed under the **MIT-license**.  
