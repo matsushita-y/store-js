@@ -15,6 +15,10 @@
         }
     };
     
+    Store.clear = function () {
+        localStorage.clear();
+    };
+    
     Store.prototype.get = function (name) {
         var value = localStorage.getItem("store." + this.name + "." + name);
         if (value === null) { return undefined; }
