@@ -7,7 +7,7 @@
     var Store = this.Store = function (name, defaults, watcherSpeed) {
         var that = this;
         this.name = name;
-        this.bindings = {};
+        this.listeners = {};
         
         // Set defaults
         if (defaults) {
@@ -21,8 +21,8 @@
         // Faked Events
         var fireEvent = function (name, value) {
             ([name, "*"]).each(function (selector) {
-                if (that.bindings[selector]) {
-                    that.bindings[selector].each(function (callback) {
+                if (that.listeners[selector]) {
+                    that.listeners[selector].each(function (callback) {
                         callback(value, name, that.name);
                     });
                 }
@@ -123,13 +123,13 @@
     };
     
     Store.prototype.addEvent = function (selector, callback) {
-        if (!this.bindings[selector]) { this.bindings[selector] = []; }
-        this.bindings[selector].push(callback);
+        if (!this.listeners[selector]) { this.listeners[selector] = []; }
+        this.listeners[selector].push(callback);
     };
     
     Store.prototype.removeEvent = function (selector, callback) {
-        for (var i = (this.bindings[selector].length - 1); i >= 0; i--) {
-            if (this.bindings[selector][i] === callback) { this.bindings[selector].splice(i, 1); }
+        for (var i = (this.listeners[selector].length - 1); i >= 0; i--) {
+            if (this.listeners[selector][i] === callback) { this.listeners[selector].splice(i, 1); }
         }
     };
 }());
