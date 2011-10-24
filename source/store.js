@@ -18,7 +18,7 @@
             }
         }
         
-        // Faked Events
+        // Fake events
         var fireEvent = function (name, value) {
             ([name, "*"]).each(function (selector) {
                 if (that.listeners[selector]) {
