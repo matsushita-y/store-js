@@ -30,25 +30,33 @@
         };
         
         var oldObj = this.toObject();
-        (function watcher() {
-            var newObj = that.toObject();
-            
-            for (var key in newObj) {
-                if (newObj.hasOwnProperty(key) && newObj[key] !== oldObj[key]) {
-                    fireEvent(key, newObj[key]);
-                    oldObj = newObj;
+        var standby = function () { watcher(true); };
+        var watcher = function (skipCheck) {
+            if (Object.keys(that.listeners).length !== 0) {
+                var newObj = that.toObject();
+                
+                if (!skipCheck) {
+                    for (var key in newObj) {
+                        if (newObj.hasOwnProperty(key) && newObj[key] !== oldObj[key]) {
+                            fireEvent(key, newObj[key]);
+                        }
+                    }
+                    
+                    for (var key in oldObj) {
+                        if (oldObj.hasOwnProperty(key) && !newObj.hasOwnProperty(key)) {
+                            fireEvent(key, newObj[key]);
+                        }
+                    }
                 }
+                
+                oldObj = newObj;
+                setTimeout(watcher, (watcherSpeed || 300));
+            } else {
+                setTimeout(standby, 1000);
             }
-            
-            for (var key in oldObj) {
-                if (oldObj.hasOwnProperty(key) && !newObj.hasOwnProperty(key)) {
-                    fireEvent(key, newObj[key]);
-                    oldObj = newObj;
-                }
-            }
-            
-            setTimeout(watcher, (watcherSpeed || 300));
-        }());
+        };
+        
+        standby();
     };
     
     Store.clear = function () {
@@ -125,11 +133,15 @@
     Store.prototype.addEvent = function (selector, callback) {
         if (!this.listeners[selector]) { this.listeners[selector] = []; }
         this.listeners[selector].push(callback);
+        return this;
     };
     
     Store.prototype.removeEvent = function (selector, callback) {
         for (var i = (this.listeners[selector].length - 1); i >= 0; i--) {
             if (this.listeners[selector][i] === callback) { this.listeners[selector].splice(i, 1); }
         }
+        
+        if (this.listeners[selector].length === 0) { delete this.listeners[selector]; }
+        return this;
     };
 }());
