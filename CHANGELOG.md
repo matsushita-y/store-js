@@ -1,6 +1,9 @@
 # Changelog
 *Feature/Change/Bug/Other*
 
+## v3.0.1
+* **Change**: Improved implementation of class method
+
 ## v3.0
 * **Feature**: Added event support
 * **Feature**: Added clear class method

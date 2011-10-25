@@ -1,4 +1,4 @@
-# [store.js](https://github.com/frankkohlhepp/store-js) v3.0
+# [store.js](https://github.com/frankkohlhepp/store-js) v3.0.1
 *A powerful toolkit for localStorage.*
 
 ### Info
