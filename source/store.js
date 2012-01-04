@@ -8,15 +8,14 @@
         var that = this;
         this.name = name;
         this.listeners = {};
-        
+        this.defaults = defaults || {};
+		
         // Set defaults
-        if (defaults) {
-            for (var key in defaults) {
-                if (defaults.hasOwnProperty(key) && this.get(key) === undefined) {
-                    this.set(key, defaults[key]);
-                }
-            }
-        }
+		for (var key in this.defaults) {
+			if (this.defaults.hasOwnProperty(key) && this.get(key) === undefined) {
+				this.set(key, this.defaults[key]);
+			}
+		}
         
         // Fake events
         var fireEvent = function (name, value) {
@@ -68,6 +67,14 @@
         var value = localStorage.getItem("store." + this.name + "." + name);
         if (value === null) { return; }
         try { return JSON.parse(value); } catch (e) { return null; }
+    };
+    
+    Store.prototype.getDefault = function (name) {
+		if (this.defaults[name] === undefined) {
+			return null;
+		}
+		
+        return this.defaults[name];
     };
     
     Store.prototype.set = function (name, value) {
