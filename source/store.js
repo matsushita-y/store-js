@@ -7,15 +7,11 @@
     var Store = this.Store = function (name, defaults, watcherSpeed) {
         var that = this;
         this.name = name;
-        this.listeners = {};
         this.defaults = defaults || {};
-		
-        // Set defaults
-		for (var key in this.defaults) {
-			if (this.defaults.hasOwnProperty(key) && this.get(key) === undefined) {
-				this.set(key, this.defaults[key]);
-			}
-		}
+        this.listeners = {};
+        
+        // Apply defaults
+        this.applyDefaults();
         
         // Fake events
         var fireEvent = function (name, value) {
@@ -63,18 +59,20 @@
         localStorage.clear();
     };
     
+    Store.prototype.applyDefaults = function () {
+        for (var key in this.defaults) {
+            if (this.defaults.hasOwnProperty(key) && this.get(key) === undefined) {
+                this.set(key, this.defaults[key]);
+            }
+        }
+        
+        return this;
+    };
+    
     Store.prototype.get = function (name) {
         var value = localStorage.getItem("store." + this.name + "." + name);
         if (value === null) { return; }
         try { return JSON.parse(value); } catch (e) { return null; }
-    };
-    
-    Store.prototype.getDefault = function (name) {
-		if (this.defaults[name] === undefined) {
-			return null;
-		}
-		
-        return this.defaults[name];
     };
     
     Store.prototype.set = function (name, value) {
@@ -102,7 +100,7 @@
         return this;
     };
     
-    Store.prototype.removeAll = function () {
+    Store.prototype.reset = function () {
         var name = "store." + this.name + ".";
         for (var i = (localStorage.length - 1); i >= 0; i--) {
             if (localStorage.key(i).substring(0, name.length) === name) {
@@ -110,7 +108,7 @@
             }
         }
         
-        return this;
+        return this.applyDefaults();
     };
     
     Store.prototype.toObject = function () {
@@ -128,7 +126,7 @@
     };
     
     Store.prototype.fromObject = function (values, merge) {
-        if (!merge) { this.removeAll(); }
+        if (!merge) { this.reset(); }
         for (var key in values) {
             if (values.hasOwnProperty(key)) {
                 this.set(key, values[key]);
