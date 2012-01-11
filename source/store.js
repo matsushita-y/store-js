@@ -4,6 +4,15 @@
 // License: MIT-license
 //
 (function () {
+    var countMembers = function (obj) {
+        var count = 0;
+        for (member in obj) {
+            if (obj.hasOwnProperty(member)) { count++; }
+        }
+        
+        return count;
+    };
+    
     var Store = this.Store = function (name, defaults, watcherSpeed) {
         var that = this;
         this.name = name;
@@ -27,7 +36,7 @@
         var oldObj = this.toObject();
         var standby = function () { watcher(true); };
         var watcher = function (skipCheck) {
-            if (Object.keys(that.listeners).length !== 0) {
+            if (countMembers(that.listeners) !== 0) {
                 var newObj = that.toObject();
                 
                 if (!skipCheck) {
