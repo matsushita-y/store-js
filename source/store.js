@@ -106,7 +106,7 @@
     
     Store.prototype.remove = function (name) {
         localStorage.removeItem("store." + this.name + "." + name);
-        return this;
+        return this.applyDefaults();
     };
     
     Store.prototype.reset = function () {
