@@ -63,8 +63,7 @@
         standby();
     };
     
-    Store.__proto__ = function Empty() {};
-    Store.__proto__.clear = function () {
+    Store.clear = function () {
         localStorage.clear();
     };
     
