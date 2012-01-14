@@ -17,6 +17,7 @@
         var that = this;
         this.name = name;
         this.defaults = defaults || {};
+        this.watcherSpeed = watcherSpeed || 500;
         this.listeners = {};
         
         // Apply defaults
@@ -54,7 +55,7 @@
                 }
                 
                 oldObj = newObj;
-                setTimeout(watcher, (watcherSpeed || 300));
+                setTimeout(watcher, this.watcherSpeed);
             } else {
                 setTimeout(standby, 1000);
             }
