@@ -1,10 +1,11 @@
 //
+// store.js by Frank Kohlhepp
 // Copyright (c) 2011 - 2012 Frank Kohlhepp
 // https://github.com/frankkohlhepp/store-js
 // License: MIT-license
 //
 (function () {
-    var countMembers = function (obj) {
+    var objectCount = function (obj) {
         var count = 0;
         for (member in obj) {
             if (obj.hasOwnProperty(member)) { count++; }
@@ -13,9 +14,9 @@
         return count;
     };
     
-    var arrayEach = function (array, fn) {
-        for (var i = 0, l = array.length; i < l; i++){
-            if (i in array) fn(array[i], i, array);
+    var arrayEach = function (arr, fn) {
+        for (var i = 0; i < arr.length; i++) {
+            if (i in arr) { fn(arr[i], i, arr); }
         }
     };
     
@@ -31,7 +32,6 @@
         
         // Fake events
         var fireEvent = function (name, value) {
-            console.log(name, value, {t:[name, "*"]});
             arrayEach([name, "*"], function (selector) {
                 if (that.listeners[selector]) {
                     arrayEach(that.listeners[selector], function (callback) {
@@ -42,9 +42,8 @@
         };
         
         var oldObj = this.toObject();
-        var standby = function () { watcher(true); };
-        var watcher = function (skipCheck) {
-            if (countMembers(that.listeners) !== 0) {
+        var watcher = this.watcher = function (skipCheck) {
+            if (objectCount(that.listeners) !== 0) {
                 var newObj = that.toObject();
                 
                 if (!skipCheck) {
@@ -63,12 +62,8 @@
                 
                 oldObj = newObj;
                 setTimeout(watcher, this.watcherSpeed);
-            } else {
-                setTimeout(standby, 1000);
             }
         };
-        
-        standby();
     };
     
     Store.clear = function () {
@@ -155,6 +150,7 @@
     Store.prototype.addEvent = function (selector, callback) {
         if (!this.listeners[selector]) { this.listeners[selector] = []; }
         this.listeners[selector].push(callback);
+        this.watcher(true);
         return this;
     };
     
