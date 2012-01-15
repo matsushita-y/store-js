@@ -158,8 +158,8 @@
         for (var i = 0; i < selectors.length; i++) {
             var selector = selectors[i];
             if (this.listeners[selector]) {
-                for (var i = 0; i < this.listeners[selector].length; i++) {
-                    this.listeners[selector][i](value, name, this.name);
+                for (var j = 0; j < this.listeners[selector].length; j++) {
+                    this.listeners[selector][j](value, name, this.name);
                 }
             }
         }
