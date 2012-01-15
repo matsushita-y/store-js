@@ -13,6 +13,12 @@
         return count;
     };
     
+    var arrayEach = function (array, fn) {
+        for (var i = 0, l = array.length; i < l; i++){
+            if (i in array) fn(array[i], i, array);
+        }
+    };
+    
     var Store = this.Store = function (name, defaults, watcherSpeed) {
         var that = this;
         this.name = name;
@@ -25,9 +31,10 @@
         
         // Fake events
         var fireEvent = function (name, value) {
-            ([name, "*"]).each(function (selector) {
+            console.log(name, value, {t:[name, "*"]});
+            arrayEach([name, "*"], function (selector) {
                 if (that.listeners[selector]) {
-                    that.listeners[selector].each(function (callback) {
+                    arrayEach(that.listeners[selector], function (callback) {
                         callback(value, name, that.name);
                     });
                 }
