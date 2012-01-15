@@ -5,23 +5,16 @@
 // License: MIT-license
 //
 (function () {
-    var objectCount = function (obj) {
+    var objectGetLength = function (object) {
         var count = 0;
-        for (member in obj) {
-            if (obj.hasOwnProperty(member)) { count++; }
+        for (var key in object) {
+            if (object.hasOwnProperty(key)) { count++; }
         }
         
         return count;
     };
     
-    var arrayEach = function (arr, fn) {
-        for (var i = 0; i < arr.length; i++) {
-            if (i in arr) { fn(arr[i], i, arr); }
-        }
-    };
-    
     var Store = this.Store = function (name, defaults, watcherSpeed) {
-        var that = this;
         this.name = name;
         this.defaults = defaults || {};
         this.watcherSpeed = watcherSpeed || 500;
@@ -29,41 +22,6 @@
         
         // Apply defaults
         this.applyDefaults();
-        
-        // Fake events
-        var fireEvent = function (name, value) {
-            arrayEach([name, "*"], function (selector) {
-                if (that.listeners[selector]) {
-                    arrayEach(that.listeners[selector], function (callback) {
-                        callback(value, name, that.name);
-                    });
-                }
-            });
-        };
-        
-        var oldObj = this.toObject();
-        var watcher = this.watcher = function (skipCheck) {
-            if (objectCount(that.listeners) !== 0) {
-                var newObj = that.toObject();
-                
-                if (!skipCheck) {
-                    for (var key in newObj) {
-                        if (newObj.hasOwnProperty(key) && newObj[key] !== oldObj[key]) {
-                            fireEvent(key, newObj[key]);
-                        }
-                    }
-                    
-                    for (var key in oldObj) {
-                        if (oldObj.hasOwnProperty(key) && !newObj.hasOwnProperty(key)) {
-                            fireEvent(key, newObj[key]);
-                        }
-                    }
-                }
-                
-                oldObj = newObj;
-                setTimeout(watcher, this.watcherSpeed);
-            }
-        };
     };
     
     Store.clear = function () {
@@ -75,6 +33,38 @@
             if (this.defaults.hasOwnProperty(key) && this.get(key) === undefined) {
                 this.set(key, this.defaults[key]);
             }
+        }
+        
+        return this;
+    };
+    
+    Store.prototype.watcher = function (force) {
+        if (this.watcherTimer) {
+            clearTimeout(this.watcherTimer);
+        }
+        
+        if (objectGetLength(this.listeners) || force) {
+            this.newObject = this.toObject();
+            
+            if (this.oldObject) {
+                for (var key in this.newObject) {
+                    if (this.newObject.hasOwnProperty(key) && this.newObject[key] !== this.oldObject[key]) {
+                        this.fireEvent(key, this.newObject[key]);
+                    }
+                }
+                
+                for (var key in this.oldObject) {
+                    if (this.oldObject.hasOwnProperty(key) && !this.newObject.hasOwnProperty(key)) {
+                        this.fireEvent(key, this.newObject[key]);
+                    }
+                }
+            }
+            
+            this.oldObject = this.newObject;
+            var that = this;
+            this.watcherTimer = setTimeout(function () {
+                that.watcher();
+            }, this.watcherSpeed);
         }
         
         return this;
@@ -148,9 +138,9 @@
     };
     
     Store.prototype.addEvent = function (selector, callback) {
+        this.watcher(true);
         if (!this.listeners[selector]) { this.listeners[selector] = []; }
         this.listeners[selector].push(callback);
-        this.watcher(true);
         return this;
     };
     
@@ -159,7 +149,21 @@
             if (this.listeners[selector][i] === callback) { this.listeners[selector].splice(i, 1); }
         }
         
-        if (this.listeners[selector].length === 0) { delete this.listeners[selector]; }
+        if (!this.listeners[selector].length) { delete this.listeners[selector]; }
+        return this;
+    };
+    
+    Store.prototype.fireEvent = function (name, value) {
+        var selectors = [name, "*"];
+        for (var i = 0; i < selectors.length; i++) {
+            var selector = selectors[i];
+            if (this.listeners[selector]) {
+                for (var i = 0; i < this.listeners[selector].length; i++) {
+                    this.listeners[selector][i](value, name, this.name);
+                }
+            }
+        }
+        
         return this;
     };
 }());
