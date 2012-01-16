@@ -14,6 +14,24 @@
         return count;
     };
     
+    var arrayIndexOf = function (array, item, from) {
+        var length = array.length >>> 0;
+        for (var i = (from < 0) ? Math.max(0, length + from) : from || 0; i < length; i++) {
+            if (array[i] === item) { return i; }
+        }
+        
+        return -1;
+    };
+    
+    var arrayContains = function (array, item, from) {
+        return arrayIndexOf(array, item, from) !== -1;
+    };
+    
+    var arrayInclude = function (array, item) {
+        if (!arrayContains(array, item)) { array.push(item); }
+        return array;
+    };
+    
     var Store = this.Store = function (name, defaults, watcherSpeed) {
         this.name = name;
         this.defaults = defaults || {};
@@ -72,7 +90,7 @@
     
     Store.prototype.get = function (name) {
         var value = localStorage.getItem("store." + this.name + "." + name);
-        if (value === null) { return; }
+        if (value === null) { return undefined; }
         try { return JSON.parse(value); } catch (e) { return null; }
     };
     
@@ -132,7 +150,7 @@
     Store.prototype.addEvent = function (selector, callback) {
         this.watcher(true);
         if (!this.listeners[selector]) { this.listeners[selector] = []; }
-        this.listeners[selector].push(callback);
+        arrayInclude(this.listeners[selector], callback);
         return this;
     };
     
