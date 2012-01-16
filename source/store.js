@@ -80,16 +80,8 @@
         if (value === undefined) {
             this.remove(name);
         } else {
-            if (typeof value === "function") {
-                value = null;
-            } else {
-                try {
-                    value = JSON.stringify(value);
-                } catch (e) {
-                    value = null;
-                }
-            }
-            
+            if (typeof value === "function") { value = null; }
+            try { value = JSON.stringify(value); } catch (e) { value = null; }
             localStorage.setItem("store." + this.name + "." + name, value);
         }
         
