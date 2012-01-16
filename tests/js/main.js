@@ -274,7 +274,7 @@ window.onload = function () {
     
     // test 10 - watcher()
     (function () {
-        var store = new Store("test10", null, 100);
+        var store = new Store("test10", null, 300);
         var lastTime = 0;
         
         store.set("test", "test");
@@ -287,12 +287,12 @@ window.onload = function () {
         
         store.set("test2", "test");
         store.addEvent("test2", function () {
-            console.log("hi");
-            if (lastTime !== 0 && (Date.now() - lastTime) < 100) {
+            // if (lastTime !== 0) { console.log(+(new Date) - lastTime); }
+            if (lastTime !== 0 && (+(new Date) - lastTime) < 100) {
                 test10.failure();
             }
             
-            lastTime = Date.now();
+            lastTime = +(new Date);
             store.set("test2", Math.random());
         });
         
@@ -404,7 +404,7 @@ window.onload = function () {
     
     // test 13 - events
     (function () {
-        var store = new Store("test13", null, 100);
+        var store = new Store("test13", null, 300);
         var count = 0;
         
         store.addEvent("*", function (value, name, store) {
