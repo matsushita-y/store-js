@@ -84,11 +84,6 @@ var mySettings = settings.toObject();
 
 // and
 
-var mySettings = {
-    "color": "blue",
-    "enable_test2": true
-};
-
 settings.fromObject(mySettings);
 ```
 
@@ -157,10 +152,10 @@ var settings = new Store("settings", null, 100);
 var settings = new Store("settings");
 ```
 
-**Parameters**: name(string), *defaults(object), *watcherSpeed(number)  
+**Parameters**: name(string), *defaults(object) = {}, *watcherSpeed(number) = 500  
 **Return value**: store(object)
 
-Creates a new Store, optionally with default values and a custom watcher speed  
+Creates a new Store, optionally with default values and a custom watcher speed.  
 If a value is already present in localStorage, it will not be overridden.  
 If a value is not already present, it will be created with the default value.  
 watcherSpeed is the period after which the event emulator checks for changes.
@@ -212,7 +207,7 @@ settings.watcher(true);
 settings.watcher();
 ```
 
-**Parameters**: force(boolean)  
+**Parameters**: *force(boolean) = false  
 **Return value**: store(object)
 
 Used internally to start the watcher when adding event listeners.  
@@ -220,7 +215,6 @@ Don't tinker with it, unless you know what you're doing!
 
 ###### get()
 ``` javascript
-var settings = new Store("settings");
 var color = settings.get("color");
 ```
 
@@ -232,7 +226,6 @@ If a value is not present in localStorage, it will return undefined.
 
 ###### set()
 ``` javascript
-var settings = new Store("settings");
 settings.set("color", "blue");
 ```
 
@@ -245,30 +238,28 @@ Use null instead, if you want to set a value to "nothing".
 
 ###### remove()
 ``` javascript
-var settings = new Store("settings");
 settings.remove("color");
 ```
 
 **Parameters**: name(string)  
 **Return value**: store(object)
 
-Removes a value.
+Removes a value.  
+If the value has a default, the value will fall back to the default.
 
 ###### reset()
 ``` javascript
-var settings = new Store("settings");
 settings.reset();
 ```
 
 **Parameters**: (none)  
 **Return value**: store(object)
 
-Removes all values of a store.
+Removes all values of a store and restores the defaults.
 
 ###### toObject()
 ``` javascript
-var settings = new Store("settings");
-var settingsObj = settings.toObject();
+var object = settings.toObject();
 ```
 
 **Parameters**: (none)  
@@ -278,21 +269,18 @@ Puts all values of a store in an object.
 
 ###### fromObject()
 ``` javascript
-var settingsObj = {
+settings.fromObject({
     "color": "brown",
     "use_everything": true,
     "be_a_hero": true
-};
-
-var settings = new Store("settings");
-settings.fromObject(settingsObj, true);
+});
 ```
 
-**Parameters**: values(object), *merge(boolean)  
+**Parameters**: values(object), *merge(boolean) = false  
 **Return value**: store(object)
 
-Replaces the store with the values from the object.  
-If "merge" is false (which is the default), then the complete store will be removed, and replaced with the values.  
+Replaces the store with the values from an object.  
+If "merge" is false (which is the default), then the complete store will be removed, and replaced with the values. (Defaults will be restored anyways.)  
 If "merge" is true, then new values will be added, different values will be replaced, all other values won't be touched.
 
 ###### addEvent()
@@ -311,7 +299,8 @@ settings.addEvent("*", function (value, name, store) {
 **Parameters**: selector(string), callback(function)  
 **Return value**: store(object)
 
-Adds an event listener for a specific value or all values ("*").
+Adds an event listener for a specific value or all values ("*").  
+The callback function gets passed three arguments: the new value, the name of the value, and the name of the store.
 
 ###### removeEvent()
 ``` javascript
