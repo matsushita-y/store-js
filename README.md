@@ -2,7 +2,7 @@
 *A powerful toolkit for localStorage.*
 
 ### Info
-store.js aims to solve a bunch of localStorage's problems.
+store.js aims to solve a bunch of localStorage's problems.  
 The main problem is that localStorage stringifies every value you save.  
 Starting with that issue, localStorage is not very powerful: You just can save key-value pairs. And that's it.  
 You don't have any structure (or groups), you cannot make a second, clean group, you cannot set default values,
@@ -102,7 +102,7 @@ settings.fromObject(mySettings, true);
 ### Events
 store.js supports events. Fake events to be exact. There is no way to add an event listener
 for localstorage to the DOM, so store.js emulates events by checking periodically for new values.  
-The default period is 500ms. You can set a custom value by setting watcherSpeed in the constructor. (third parameter)  
+The default period is 500ms. You can set a custom value by setting watcherSpeed in the constructor (third parameter).  
 Keep in mind that checking for new values costs CPU time, so use this setting wisely!
 
 To add and remove listeners, use addEvent() and removeEvent().
